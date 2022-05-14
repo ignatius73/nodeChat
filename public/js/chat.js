@@ -14,17 +14,26 @@ const usuario = {
 
 socket.on('connect', ()=>{
     socket.emit('ingreso-chat', usuario, (payload)=>{
-        console.log(payload);
+            cargaUsuarios(payload)
+              
     })
 
 })
 
 socket.on('usuariosConectados', (usuarios)=>{
     console.log(usuarios);
+    cargaUsuarios(usuarios)
+   
 })
-
 
 socket.on('nuevoMensaje', mensaje=>{
+    cargarMensaje(mensaje,'chat-message-right','mr-3' )
     console.log(mensaje);
 })
+
+socket.on('mensajePrivado', (message)=>{
+    cargarMensaje(message,'chat-message-right','mr-3' )
+})
+
+
 

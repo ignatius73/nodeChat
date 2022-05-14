@@ -19,13 +19,14 @@ function server(server){
 
         
     
-        socket.on('ingreso-chat', (chater,callback)=>{
+        socket.on('ingreso-chat', (chater, callback)=>{
             socket.join(chater.sala);
             const newChater = createChater(socket.id, chater.nombre, chater.sala);
             chaters.addChater(newChater);
-         
-            socket.emit('usuariosConectados', chaters.getChaters())
-            callback(socket.id);
+            const usuariosConectados = chaters.getChaters()
+            console.log(usuariosConectados);
+            socket.broadcast.emit('usuariosConectados', usuariosConectados)
+            callback(usuariosConectados);
 
     
         })
@@ -36,13 +37,22 @@ function server(server){
         })
 
         socket.on('nuevoMensaje', (mensaje, callback)=>{
+            
             const chater = chaters.searchChaterById(socket.id)
-            console.log(mensaje);
-            console.log(chater.sala);
+            console.log(chater);
             socket.broadcast.to(chater.sala).emit('nuevoMensaje', mensaje)
-            callback('Mensaje Enviado correctamente')
+            callback(mensaje)
         })
-    
+
+        socket.on('mensajePrivado', (mensaje, callback)=>{
+            
+            const chater = chaters.searchChaterById(socket.id)
+            console.log(chater);
+            socket.broadcast.to(mensaje.to).emit('mensajePrivado', mensaje)
+            callback(mensaje);
+        })
+
+        /* mensajePrivado*/    
     
     
     })

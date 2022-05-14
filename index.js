@@ -11,8 +11,8 @@ server(httpServer);
 
 app.use(express.static('public'))
 
-httpServer.listen(3001, ()=>{
-    console.log("Escuchando conexiones en el puerto 3001");
+httpServer.listen(3000, ()=>{
+    console.log("Escuchando conexiones en el puerto 3000");
 })
 
 

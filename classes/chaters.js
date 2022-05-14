@@ -20,8 +20,7 @@ class Chaters{
     }
 
     deleteChater(id){
-        console.log(id);
-        console.log(this.chaters);
+        
         this.chaters = this.chaters.filter( user => user.id !== id)
         return this.chaters
     }
